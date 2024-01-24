@@ -146,7 +146,7 @@ def check_lat(lat):
 def check_lon(lon):
     '''
     Checks that longitude values are floats, are not missing, and are between -180 and 180.
-    
+
     @param lon - The column which contains centroid longitudes.
     '''
     correct_type = type(lon[0]) == np.float64
@@ -424,7 +424,7 @@ def check_intersections(new_data, main_data, out_path, demo):
             overlapping_data.to_file(
                 out_path
             )
-    
+
             print(
                 'Overlapping polygons have been saved to ' +
                 str(out_path)
@@ -559,25 +559,26 @@ def output(new_data, main_data, optional_fields, all_fields, base_dir, new_data_
 '''
 
     if demo == False:
-        
+
         if separate_file:
-    
-            filepath = base_dir / 'python_output' /(
-                str(new_data_file).split('.', maxsplit=1)[0] + "_formatted.geojson"
+
+            filepath = base_dir / 'python_output' / (
+                str(new_data_file).split('.', maxsplit=1)[
+                    0] + "_formatted.geojson"
             )
-                
+
             new_data.to_file(filepath)
             print(str(filepath))
-            
+
         else:
-            
+
             main_data = add_empty_columns(
                 main_data,
                 [col for col in optional_fields]
             )
             main_data.ContributionDate = [value.strftime(
                 '%Y-%m-%d') for value in main_data.ContributionDate]
-    
+
             main_data = main_data[all_fields + ['geometry']]
             updated_data = pd.concat([main_data, new_data])
             updated_data.to_file(main_filepath)
